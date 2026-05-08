@@ -28,12 +28,27 @@ namespace ADONET.services
 
         public void Add(Students student)
         {
+            checkMatricule(student.matricule);
+
             _coursSGBDRepo.Add(student);
         }
 
         public void Remove(int id)
         {
             _coursSGBDRepo.Remove(id);
+        }
+        private void checkMatricule(string matricule)
+        {
+            if (string.IsNullOrEmpty(matricule))
+            {
+                throw new ArgumentException("Matricule cannot be null or empty.");
+            }
+            string prefixe = matricule.Substring(0, 2);
+
+            if (prefixe != "HE" && prefixe != "PS")
+            {
+                throw new ArgumentException("Matricule must start with HE or PS");
+            }
         }
     }
 }

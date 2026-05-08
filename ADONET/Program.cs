@@ -58,6 +58,8 @@ namespace ADONET
                     default:
                         logger.LogWarning("Invalid choice. Please select 1 to add or 2 to delete.");
                         break;
+                    case 3:AddCheckMatricule(studentsService);
+                        break;
                 }
 
 
@@ -72,6 +74,15 @@ namespace ADONET
                 logger.LogError(ex, "An error occured while processing students.");
             }
             
+        }
+
+        private static void AddCheckMatricule(IStudentsService studentsService)
+        {
+            Students newStudent = new Students();
+            newStudent.matricule = "PS04";
+            newStudent.firstName = "Quentin";
+            newStudent.lastName = "Platiau";
+            studentsService.Add(newStudent);
         }
         private static void Delete(IStudentsService studentsService)
         {
