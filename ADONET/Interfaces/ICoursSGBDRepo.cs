@@ -10,5 +10,6 @@ namespace ADONET.Interfaces
     public interface ICoursSGBDRepo
     {
         public List<Students> GetAll();
+        public void Add(Students student);
     }
 }
