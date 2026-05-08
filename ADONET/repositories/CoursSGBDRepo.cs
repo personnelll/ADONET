@@ -5,15 +5,15 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ADONET.repositories
 {
-    public class CoursSGBDRepo : ICoursSGBDRepo
+    public class CoursSGBDRepo : BaseRepo, ICoursSGBDRepo
     {
         private readonly string _connectionString = @"Server = PC_FAMILIAL\SQL2025; Database = CoursSGBD; User Id = sa; Password = Ephec2025;TrustServerCertificate=True;";
-
         private readonly ILogger<CoursSGBDRepo> _logger;
         public CoursSGBDRepo(ILogger<CoursSGBDRepo> logger)
         {
@@ -53,7 +53,7 @@ namespace ADONET.repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string sql = "insert INTO dbo.Etudiant(ETU_NOM,ETU_PRENOM,ETU_MATRICULE) values (@Nom, @Prenom,@Matricule)";
+                string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_add.sql");
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -63,7 +63,6 @@ namespace ADONET.repositories
                     int rowsAffected = command.ExecuteNonQuery();
                     _logger.LogInformation("Inserted {RowsAffected} row(s) into the database.", rowsAffected);
                 }
-
             }
         }
 
@@ -71,8 +70,8 @@ namespace ADONET.repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
+                string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_delete.sql");
                 connection.Open();
-                string sql = "DELETE FROM dbo.Etudiant WHERE ETU_id = @Id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@Id", id);
@@ -81,5 +80,6 @@ namespace ADONET.repositories
                 }
             }
         }
+        
     }
 }

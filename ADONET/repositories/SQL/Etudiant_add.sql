@@ -1,0 +1,1 @@
+﻿insert INTO dbo.Etudiant(ETU_NOM,ETU_PRENOM,ETU_MATRICULE) values (@Nom, @Prenom,@Matricule)

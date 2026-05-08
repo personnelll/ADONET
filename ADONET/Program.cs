@@ -86,7 +86,7 @@ namespace ADONET
         }
         private static void Delete(IStudentsService studentsService)
         {
-            studentsService.Remove(1);
+            studentsService.Remove(10);
         }
 
         private static void Add(IStudentsService studentsService)

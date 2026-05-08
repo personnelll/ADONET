@@ -9,6 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="repositories\SQL\Etudiant_delete.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="repositories\SQL\Etudiant_add.sql" />
+    <EmbeddedResource Include="repositories\SQL\Etudiant_delete.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.7" />
