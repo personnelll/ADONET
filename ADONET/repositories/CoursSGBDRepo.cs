@@ -12,7 +12,7 @@ namespace ADONET.repositories
 {
     public class CoursSGBDRepo : ICoursSGBDRepo
     {
-        private readonly string _connectionString = "public static string cheminDB = @\"Server = PC_FAMILIAL\\SQL2025; Database = CoursSGBD; User Id = sa; Password = Ephec2025;TrustServerCertificate=True\";";
+        private readonly string _connectionString = @"Server = PC_FAMILIAL\SQL2025; Database = CoursSGBD; User Id = sa; Password = Ephec2025;TrustServerCertificate=True;";
 
         private readonly ILogger<CoursSGBDRepo> _logger;
         public CoursSGBDRepo(ILogger<CoursSGBDRepo> logger)
@@ -39,13 +39,32 @@ namespace ADONET.repositories
             list.Add(student);
             list.Add(student2);
 
-            using ( SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                
+
             }
 
             return list;
+        }
+
+        public void Add(Students student)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string sql = "insert INTO dbo.Etudiant(ETU_NOM,ETU_PRENOM,ETU_MATRICULE) values (@Nom, @Prenom,@Matricule)";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Nom", student.lastName);
+                    command.Parameters.AddWithValue("@Prenom", student.firstName);
+                    command.Parameters.AddWithValue("@Matricule", student.matricule);
+                    int rowsAffected = command.ExecuteNonQuery();
+                    _logger.LogInformation("Inserted {RowsAffected} row(s) into the database.", rowsAffected);
+                }
+
+            }
         }
     }
 }
