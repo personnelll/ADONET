@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ADONET.Interfaces;
 using ADONET.repositories;
+using Microsoft.VisualBasic.FileIO;
 
 //var loggerFactory = LoggerFactory.Create(builder =>
 //{
@@ -44,28 +45,51 @@ namespace ADONET
             var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             var studentsService = serviceProvider.GetRequiredService<IStudentsService>();
 
+            int choice = Convert.ToInt32(args[0]);
+
             try
             {
+                switch (choice)
+                {
+                    case 1: Add(studentsService);
+                        break;
+                    case 2: Delete(studentsService); 
+                        break;
+                    default:
+                        logger.LogWarning("Invalid choice. Please select 1 to add or 2 to delete.");
+                        break;
+                }
+
+
                 logger.LogInformation("Fetching all studentd...");
                 studentsService.GetAll();
                 logger.LogInformation("students fetched successfuly.");
 
-                Students newStudent = new Students();
-                newStudent.matricule = "04";
-                newStudent.firstName = "Denis";
-                newStudent.lastName = "Platiau";
-                studentsService.Add(newStudent);
-
-                newStudent.matricule = "05";
-                newStudent.firstName = "Arlette";
-                newStudent.lastName = "Pironet";
-                studentsService.Add(newStudent);
+                
             }
             catch(Exception ex)
             {
                 logger.LogError(ex, "An error occured while processing students.");
             }
             
+        }
+        private static void Delete(IStudentsService studentsService)
+        {
+            studentsService.Remove(1);
+        }
+
+        private static void Add(IStudentsService studentsService)
+        {
+            Students newStudent = new Students();
+            newStudent.matricule = "04";
+            newStudent.firstName = "Denis";
+            newStudent.lastName = "Platiau";
+            studentsService.Add(newStudent);
+            
+            newStudent.matricule = "05";
+            newStudent.firstName = "Arlette";
+            newStudent.lastName = "Pironet";
+            studentsService.Add(newStudent);
         }
 
         private static ServiceProvider ConfigureService()
