@@ -30,7 +30,7 @@ namespace ADONET.services
         {
             checkMatricule(student.matricule);
 
-            checkLastName(student.firstName);
+            checkLastName(student.lastName);
 
             _coursSGBDRepo.Add(student);
         }
@@ -60,7 +60,7 @@ namespace ADONET.services
         {
             if (string.IsNullOrEmpty(matricule))
             {
-                throw new ArgumentException("Matricule cannot be null or empty.");
+                throw new ArgumentException("Matricule cannot be null or empty");
             }
             string prefixe = matricule.Substring(0, 2);
 
