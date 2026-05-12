@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace ADONET.repositories
 {
-    public class CoursSGBDRepo : BaseRepo, ICoursSGBDRepo
+    public class StudentRepo : BaseRepo, IStudentRepo
     {
         private readonly string _connectionString = @"Server = PC_FAMILIAL\SQL2025; Database = CoursSGBD; User Id = sa; Password = Ephec2025;TrustServerCertificate=True;";
-        private readonly ILogger<CoursSGBDRepo> _logger;
-        public CoursSGBDRepo(ILogger<CoursSGBDRepo> logger)
+        private readonly ILogger<StudentRepo> _logger;
+        public StudentRepo(ILogger<StudentRepo> logger)
         {
             _logger = logger;
         }
@@ -66,7 +66,7 @@ namespace ADONET.repositories
             }
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -80,6 +80,25 @@ namespace ADONET.repositories
                 }
             }
         }
-        
+
+        public void Update(Students student)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_update.sql");
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", student.Id);
+                    command.Parameters.AddWithValue("@Nom", student.lastName);
+                    command.Parameters.AddWithValue("@Prenom", student.firstName);
+                    command.Parameters.AddWithValue("@Matricule", student.matricule);
+                    int rowsAffected = command.ExecuteNonQuery();
+                    _logger.LogInformation("Update {RowsAffected} row(s) into the database.", rowsAffected);
+                }
+            }
+        }
+
     }
 }

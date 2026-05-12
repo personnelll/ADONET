@@ -8,6 +8,7 @@ namespace ADONET.Models
 {
     public class Students
     {
+        public int Id { get; set; }
         public string matricule { get; set; }
 
         public string firstName { get; set; }

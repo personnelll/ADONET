@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ADONET.Interfaces
 {
-    public interface ICoursSGBDRepo
+    public interface IStudentRepo
     {
         public List<Students> GetAll();
         public void Add(Students student);
 
-        public void Remove(int id);
+        public void Delete(int id);
+
+        public void Update(Students student);
     }
 }
