@@ -10,5 +10,7 @@ namespace ADONET.Interfaces
         void Delete(int id);
 
         void Update(Students student);
+
+        List<Students> GetByLastName(string lastName);
     }
 }

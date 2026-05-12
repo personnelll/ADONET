@@ -48,6 +48,14 @@ namespace ADONET.services
 
             _coursSGBDRepo.Update(student);
         }
+
+        public List<Students> GetByLastName(string lastName)
+        {
+            checkLastName(lastName);
+            List<Students> students = _coursSGBDRepo.GetByLastName(lastName);
+            return students;
+        }
+
         private void checkMatricule(string matricule)
         {
             if (string.IsNullOrEmpty(matricule))

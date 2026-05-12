@@ -13,6 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="repositories\SQL\Etudiant_GetByLastName.sql" />
+    <EmbeddedResource Include="repositories\SQL\Etudiant_GetAll.sql" />
     <EmbeddedResource Include="repositories\SQL\Etudiant_update.sql" />
     <EmbeddedResource Include="repositories\SQL\Etudiant_add.sql" />
     <EmbeddedResource Include="repositories\SQL\Etudiant_delete.sql" />
