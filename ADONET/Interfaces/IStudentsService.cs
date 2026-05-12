@@ -4,9 +4,11 @@ namespace ADONET.Interfaces
 {
     public interface IStudentsService
     {
-        public List<Students> GetAll();
-        public void Add(Students student);
+        List<Students> GetAll();
+        void Add(Students student);
 
-        public void Remove(int id);
+        void Delete(int id);
+
+        void Update(Students student);
     }
 }

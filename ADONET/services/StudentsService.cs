@@ -7,10 +7,10 @@ namespace ADONET.services
 {
     public class StudentsService : IStudentsService
     {
-        private ICoursSGBDRepo _coursSGBDRepo;
+        private IStudentRepo _coursSGBDRepo;
         private readonly ILogger<StudentsService> _logger;
 
-        public StudentsService(ILogger<StudentsService> logger, ICoursSGBDRepo coursSGBDRepo)
+        public StudentsService(ILogger<StudentsService> logger, IStudentRepo coursSGBDRepo)
         {
             _logger = logger;
 
@@ -30,12 +30,23 @@ namespace ADONET.services
         {
             checkMatricule(student.matricule);
 
+            checkLastName(student.firstName);
+
             _coursSGBDRepo.Add(student);
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
-            _coursSGBDRepo.Remove(id);
+            _coursSGBDRepo.Delete(id);
+        }
+
+        public void Update(Students student)
+        {
+            checkLastName(student.lastName);
+
+            checkMatricule(student.matricule);
+
+            _coursSGBDRepo.Update(student);
         }
         private void checkMatricule(string matricule)
         {
@@ -50,5 +61,15 @@ namespace ADONET.services
                 throw new ArgumentException("Matricule must start with HE or PS");
             }
         }
+
+        private void checkLastName(string lastName)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("checkLastName cannot be null or empty.");
+            }
+        }
+
+
     }
 }

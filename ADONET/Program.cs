@@ -7,33 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ADONET.Interfaces;
 using ADONET.repositories;
 using Microsoft.VisualBasic.FileIO;
-
-//var loggerFactory = LoggerFactory.Create(builder =>
-//{
-//    builder.AddConsole();
-//    builder.SetMinimumLevel(LogLevel.Debug);
-//});
-//ILogger logger = loggerFactory.CreateLogger<Program>();
-
-//try {
-
-//    ILogger<StudentsService> studentsLogger = loggerFactory.CreateLogger<StudentsService>();
-
-//    StudentsService studentsService = new StudentsService(studentsLogger);
-
-//    logger.LogInformation("Fetching all students...");
-//    List<Students> students = studentsService.GetAll();
-
-//    foreach (var student in students)
-//    {
-//       logger.LogInformation($"{student.matricule}, {student.firstName}, {student.lastName}, {student.email}");
-//    }
-//    Console.WriteLine("Hello, World!");
-//}
-//catch (Exception ex)
-//{
-//    logger.LogError(ex, "An error occurred");
-//}
+using System.Data;
 
 namespace ADONET
 {
@@ -45,7 +19,24 @@ namespace ADONET
             var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             var studentsService = serviceProvider.GetRequiredService<IStudentsService>();
 
-            int choice = Convert.ToInt32(args[0]);
+            Console.WriteLine("Select an action : ");
+            Console.WriteLine("1 - Add");
+            Console.WriteLine("2 - Delete");
+            Console.WriteLine("3 Add and check Matricule");
+            Console.WriteLine("4 - Update Student");
+            Console.WriteLine("Your choice");
+
+            var input = Console.ReadLine();
+
+            int choice;
+
+            if (!int.TryParse(input, out choice))
+            {
+                logger.LogWarning("Invalid input. Please enter a number corresponding to the action.");
+                return;
+            }
+
+
 
             try
             {
@@ -59,6 +50,8 @@ namespace ADONET
                         logger.LogWarning("Invalid choice. Please select 1 to add or 2 to delete.");
                         break;
                     case 3:AddCheckMatricule(studentsService);
+                        break;
+                    case 4: Update(studentsService);
                         break;
                 }
 
@@ -86,7 +79,7 @@ namespace ADONET
         }
         private static void Delete(IStudentsService studentsService)
         {
-            studentsService.Remove(10);
+            studentsService.Delete(10);
         }
 
         private static void Add(IStudentsService studentsService)
@@ -103,11 +96,31 @@ namespace ADONET
             studentsService.Add(newStudent);
         }
 
+        private static void Update(IStudentsService studentsService)
+        {
+            Console.WriteLine("Enter the ID of the student to update : ");
+            var input = Console.ReadLine();
+            if(int.TryParse(input, out int id))
+            {
+                Students updateStudent = new Students();
+                updateStudent.Id = id;
+                updateStudent.firstName = "Arlette";
+                updateStudent.lastName = "Pironet";
+                updateStudent.matricule = "PS05";
+                studentsService.Update(updateStudent);
+            }
+            else
+            {
+                Console.WriteLine("Invalid ID. Please enter a valid number.");
+            }
+            
+        }
+
         private static ServiceProvider ConfigureService()
         {
             var services = new ServiceCollection();
             services.AddLogging(configure => configure.AddConsole())
-                    .AddSingleton<ICoursSGBDRepo, CoursSGBDRepo>()
+                    .AddSingleton<IStudentRepo, StudentRepo>()
                     .AddSingleton<IStudentsService, StudentsService>();
             return services.BuildServiceProvider();
         }
