@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,28 +24,57 @@ namespace ADONET.repositories
         public List<Students> GetAll()
         {
             List<Students> list = new List<Students>();
-            _logger.LogInformation("Connecting to database with connection string: {ConnectionString}", _connectionString);
-            Students student = new Students();
-            student.matricule = "2023-001";
-            student.firstName = "John";
-            student.lastName = "Doe";
-            student.email = "mail.gmail.com";
 
-            Students student2 = new Students();
-            student2.matricule = "2023-002";
-            student2.firstName = "Jane";
-            student2.lastName = "Smith";
-            student2.email = "mail.yahoo.com";
-
-            list.Add(student);
-            list.Add(student2);
-
+            string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_GetAll.sql");
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-
+                using(SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var student = new Students
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("ETU_id")),
+                            matricule = reader.GetString(reader.GetOrdinal("ETU_NOM")),
+                            firstName = reader.IsDBNull(reader.GetOrdinal("ETU_PRENOM")) ? null : reader.GetString(reader.GetOrdinal("ETU_PRENOM")),
+                            lastName = reader.GetString(reader.GetOrdinal("ETU_MATRICULE"))
+                        };
+                        list.Add(student);
+                    }
+                }
             }
 
+                return list;
+        }
+
+        public List<Students> GetByLastName(string lastName)
+        {
+            List<Students> list = new List<Students>();
+            string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_GetByLastName.sql");
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@ETU_NOM", lastName);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var student = new Students
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("ETU_id")),
+                                matricule = reader.GetString(reader.GetOrdinal("ETU_NOM")),
+                                firstName = reader.IsDBNull(reader.GetOrdinal("ETU_PRENOM")) ? null : reader.GetString(reader.GetOrdinal("ETU_PRENOM")),
+                                lastName = reader.GetString(reader.GetOrdinal("ETU_MATRICULE"))
+                            };
+                            list.Add(student);
+                        }
+                    }
+                }
+            }
             return list;
         }
 

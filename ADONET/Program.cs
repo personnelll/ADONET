@@ -24,6 +24,8 @@ namespace ADONET
             Console.WriteLine("2 - Delete");
             Console.WriteLine("3 Add and check Matricule");
             Console.WriteLine("4 - Update Student");
+            Console.WriteLine("5 - Get all students");
+            Console.WriteLine("6 - Get students per lastName");
             Console.WriteLine("Your choice");
 
             var input = Console.ReadLine();
@@ -53,14 +55,11 @@ namespace ADONET
                         break;
                     case 4: Update(studentsService);
                         break;
-                }
-
-
-                logger.LogInformation("Fetching all studentd...");
-                studentsService.GetAll();
-                logger.LogInformation("students fetched successfuly.");
-
-                
+                    case 5: GetAll(studentsService);
+                        break;
+                    case 6: GetByLastName(studentsService);
+                        break;
+                }                
             }
             catch(Exception ex)
             {
@@ -114,6 +113,33 @@ namespace ADONET
                 Console.WriteLine("Invalid ID. Please enter a valid number.");
             }
             
+        }
+
+        private static void GetAll(IStudentsService studentsService)
+        {
+            var students = studentsService.GetAll();
+            foreach (var student in students)
+            {
+                Console.WriteLine($"ID: {student.Id}, Matricule: {student.matricule}, Name: {student.firstName} {student.lastName}");
+            }
+        }
+
+        private static void GetByLastName(IStudentsService studentsService)
+        {
+            Console.WriteLine("Enter the last name to search for : ");
+            var lastName = Console.ReadLine();
+            if (lastName == null)
+                {
+                Console.WriteLine("Invalid last name. Please enter a valid string.");
+                return;
+            }
+
+            var students = studentsService.GetByLastName(lastName);
+
+            foreach (var student in students)
+            {
+                Console.WriteLine($"ID: {student.Id}, Matricule: {student.matricule}, Name: {student.firstName} {student.lastName}");
+            }
         }
 
         private static ServiceProvider ConfigureService()
