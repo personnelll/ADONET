@@ -1,6 +1,6 @@
-﻿using ADONET.Models;
+﻿using Models;
 
-namespace ADONET.Interfaces
+namespace Interfaces
 {
     public interface IStudentsService
     {

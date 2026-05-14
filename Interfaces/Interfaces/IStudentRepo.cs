@@ -1,11 +1,11 @@
-﻿using ADONET.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADONET.Interfaces
+namespace Interfaces
 {
     public interface IStudentRepo
     {
