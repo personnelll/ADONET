@@ -50,56 +50,25 @@ namespace Repositories
 
         public void Add(Students student)
         {
-            //using (SqlConnection connection = new SqlConnection(_connectionString))
-            //{
-            //    connection.Open();
-            //    string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_add.sql");
-
-            //    using (SqlCommand command = new SqlCommand(sql, connection))
-            //    {
-            //        command.Parameters.AddWithValue("@Nom", student.lastName);
-            //        command.Parameters.AddWithValue("@Prenom", student.firstName);
-            //        command.Parameters.AddWithValue("@Matricule", student.matricule);
-            //        int rowsAffected = command.ExecuteNonQuery();
-            //        _logger.LogInformation("Inserted {RowsAffected} row(s) into the database.", rowsAffected);
-            //    }
-            //}
-            throw new NotImplementedException();
+            string sql = GetFileFromAssemblyAsync("Etudiant_add.sql");
+            Dictionary<string, object> dbArgs = new Dictionary<string, object>();
+            dbArgs.Add("@Nom", student.lastName);
+            dbArgs.Add("@Prenom", student.firstName);
+            dbArgs.Add("@Matricule", student.matricule);
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                int rowsAffected = connection.Execute(sql, dbArgs);
+                _logger.LogInformation("{RowsAffected} row(s) inserted.", rowsAffected);
+            }
         }
 
         public void Delete(int id)
         {
-            //using (SqlConnection connection = new SqlConnection(_connectionString))
-            //{
-            //    string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_delete.sql");
-            //    connection.Open();
-            //    using (SqlCommand command = new SqlCommand(sql, connection))
-            //    {
-            //        command.Parameters.AddWithValue("@Id", id);
-            //        int rowsAffected = command.ExecuteNonQuery();
-            //        _logger.LogInformation("Deleted {RowsAffected} row(s) from the database.", rowsAffected);
-            //    }
-            //}
             throw new NotImplementedException();
         }
 
         public void Update(Students student)
         {
-            //using (SqlConnection connection = new SqlConnection(_connectionString))
-            //{
-            //    connection.Open();
-            //    string sql = GetFileFromAssemblyAsync("repositories.SQL.Etudiant_update.sql");
-
-            //    using (SqlCommand command = new SqlCommand(sql, connection))
-            //    {
-            //        command.Parameters.AddWithValue("@Id", student.Id);
-            //        command.Parameters.AddWithValue("@Nom", student.lastName);
-            //        command.Parameters.AddWithValue("@Prenom", student.firstName);
-            //        command.Parameters.AddWithValue("@Matricule", student.matricule);
-            //        int rowsAffected = command.ExecuteNonQuery();
-            //        _logger.LogInformation("Update {RowsAffected} row(s) into the database.", rowsAffected);
-            //    }
-            //}
             throw new NotImplementedException();
         }
 

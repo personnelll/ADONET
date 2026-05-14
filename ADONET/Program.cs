@@ -69,27 +69,32 @@ namespace ADONET
         private static void AddCheckMatricule(IStudentsService studentsService)
         {
             Students newStudent = new Students();
-            newStudent.matricule = "PS04";
-            newStudent.firstName = "Quentin";
-            newStudent.lastName = "Platiau";
+            newStudent.matricule = "HE08";
+            newStudent.firstName = "Maxime";
+            newStudent.lastName = "Oliviera";
+            studentsService.Add(newStudent);
+
+            newStudent.matricule = "PS08";
+            newStudent.firstName = "Fantin";
+            newStudent.lastName = "Sterckx";
             studentsService.Add(newStudent);
         }
         private static void Delete(IStudentsService studentsService)
         {
-            studentsService.Delete(10);
+            studentsService.Delete(18);
         }
 
         private static void Add(IStudentsService studentsService)
         {
             Students newStudent = new Students();
-            newStudent.matricule = "HE04";
-            newStudent.firstName = "Denis";
-            newStudent.lastName = "Platiau";
+            newStudent.matricule = "HE06";
+            newStudent.firstName = "Maxime";
+            newStudent.lastName = "Oliviera";
             studentsService.Add(newStudent);
             
-            newStudent.matricule = "PS05";
-            newStudent.firstName = "Arlette";
-            newStudent.lastName = "Pironet";
+            newStudent.matricule = "PS06";
+            newStudent.firstName = "Fantin";
+            newStudent.lastName = "Sterckx";
             studentsService.Add(newStudent);
         }
 
