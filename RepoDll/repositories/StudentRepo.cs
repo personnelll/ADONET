@@ -1,5 +1,5 @@
-﻿using ADONET.Interfaces;
-using ADONET.Models;
+﻿using Interfaces;
+using Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADONET.repositories
+namespace Repositories
 {
     public class StudentRepo : BaseRepo, IStudentRepo
     {

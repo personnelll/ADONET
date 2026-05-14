@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ADONET\ADONET.csproj" />
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\RepoDll\RepoDll.csproj" />
   </ItemGroup>
 
   <ItemGroup>

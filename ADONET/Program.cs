@@ -1,11 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using ADONET.services;
-using ADONET.Models;
+﻿using ServicesDLL;
+using Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using ADONET.Interfaces;
-using ADONET.repositories;
+using Interfaces;
+using Repositories;
 using Microsoft.VisualBasic.FileIO;
 using System.Data;
 

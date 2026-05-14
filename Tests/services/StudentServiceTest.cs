@@ -1,7 +1,6 @@
-﻿using ADONET.Interfaces;
-using ADONET.Models;
-using ADONET.repositories;
-using ADONET.services;
+﻿using Interfaces;
+using Models;
+using ServicesDLL;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
