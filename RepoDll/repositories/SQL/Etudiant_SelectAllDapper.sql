@@ -1,0 +1,1 @@
+﻿SELECT ETU_id as Id, ETU_NOM as lastName from dbo.Etudiant
