@@ -14,5 +14,9 @@ namespace Models
         public string? firstName { get; set; }
 
         public string lastName { get; set; }
+
+        public Students() { }
+
+        public ICollection<Kots>? Kots { get; set; }
     }
 }
