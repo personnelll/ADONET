@@ -6,13 +6,13 @@ using Testcontainers.MsSql;
 
 namespace Tests.RepositoriesTests
 {
-    public class StudentDapperRepoTets : IClassFixture<DatabaseFixture>
+    public class StudentRepoTets : IClassFixture<DatabaseFixture>
     {
         private readonly DatabaseFixture _fixture;
         private string _connectionString;
         DBSetup _dbSetup => _fixture.DbSetup;
 
-        public StudentDapperRepoTets(DatabaseFixture fixture)
+        public StudentRepoTets(DatabaseFixture fixture)
         {
             _fixture = fixture;
             _connectionString = fixture.ConnectionString;
@@ -24,8 +24,8 @@ namespace Tests.RepositoriesTests
         {
             await _dbSetup.InitStudentsDataAsync();           
 
-            var logger = NullLogger<StudentDapperRepo>.Instance;
-            var repo = new StudentDapperRepo(logger, _connectionString);
+            var logger = NullLogger<StudentRepo>.Instance;
+            var repo = new StudentRepo(logger, _connectionString);
 
             var students = repo.GetAll();
 
@@ -44,8 +44,8 @@ namespace Tests.RepositoriesTests
             await _dbSetup.InitStudentsDataAsync();
 
             // instantiate repo with NullLogger and injected connection string
-            var logger = NullLogger<Repositories.StudentDapperRepo>.Instance;
-            var repo = new Repositories.StudentDapperRepo(logger, _connectionString);
+            var logger = NullLogger<Repositories.StudentRepo>.Instance;
+            var repo = new Repositories.StudentRepo(logger, _connectionString);
 
             // act
             var students = repo.GetByLastName(search);
