@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class StudentDapperRepo : BaseRepo, IStudentRepo
+    public class StudentRepo : BaseRepo, IStudentRepo
     {
         private readonly string _connectionString = @"Server = PC_FAMILIAL\SQL2025; Database = CoursSGBD; User Id = sa; Password = Ephec2025;TrustServerCertificate=True;";
-        private readonly ILogger<StudentDapperRepo> _logger;
-        public StudentDapperRepo(ILogger<StudentDapperRepo> logger)
+        private readonly ILogger<StudentRepo> _logger;
+        public StudentRepo(ILogger<StudentRepo> logger)
         {
             _logger = logger;
         }
 
-        public StudentDapperRepo(ILogger<StudentDapperRepo> logger, string connectionString)
+        public StudentRepo(ILogger<StudentRepo> logger, string connectionString)
         {
             _logger = logger;
             _connectionString = connectionString;

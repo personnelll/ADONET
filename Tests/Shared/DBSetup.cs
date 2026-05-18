@@ -35,6 +35,11 @@ namespace Shared
             await RunScript("initStudentsData.sql");
         }
 
+        public async Task InitKotsDataAsync()
+        {
+            await RunScript("initKotsData.sql");
+        }
+
         private async Task RunScript(string filename)
         {
             string sql = GetFileFromAssemblyAsync(filename);

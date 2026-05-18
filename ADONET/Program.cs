@@ -6,6 +6,7 @@ using Interfaces;
 using Repositories;
 using Microsoft.VisualBasic.FileIO;
 using System.Data;
+using Profiles;
 
 namespace ADONET
 {
@@ -16,6 +17,7 @@ namespace ADONET
             using var serviceProvider = ConfigureService();
             var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             var studentsService = serviceProvider.GetRequiredService<IStudentsService>();
+            var kotsService = serviceProvider.GetRequiredService<IKotService>();
 
             Console.WriteLine("Select an action : ");
             Console.WriteLine("1 - Add");
@@ -24,6 +26,7 @@ namespace ADONET
             Console.WriteLine("4 - Update Student");
             Console.WriteLine("5 - Get all students");
             Console.WriteLine("6 - Get students per lastName");
+            Console.WriteLine("7 - Get all kots");
             Console.WriteLine("Your choice");
 
             var input = Console.ReadLine();
@@ -56,6 +59,9 @@ namespace ADONET
                     case 5: GetAll(studentsService);
                         break;
                     case 6: GetByLastName(studentsService);
+                        break;
+                    case 7:
+                        kotsService.GetAll();
                         break;
                 }                
             }
@@ -148,9 +154,12 @@ namespace ADONET
         private static ServiceProvider ConfigureService()
         {
             var services = new ServiceCollection();
+            services.AddAutoMapper(cfg => { }, typeof(KotProfile));
             services.AddLogging(configure => configure.AddConsole())
-                    .AddSingleton<IStudentRepo, StudentDapperRepo>()
-                    .AddSingleton<IStudentsService, StudentsService>();
+                    .AddSingleton<IStudentRepo, StudentRepo>()
+                    .AddSingleton<IStudentsService, StudentsService>()
+                    .AddSingleton<IKotRepo, KotRepo>()
+                    .AddSingleton<IKotService, KotService>();
             return services.BuildServiceProvider();
         }
     }
