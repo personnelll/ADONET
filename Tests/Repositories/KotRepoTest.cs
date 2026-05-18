@@ -3,7 +3,8 @@ using Repositories;
 using Shared;
 namespace Tests.RepositoriesTests
 {
-    public class KotRepoTest : IClassFixture<DatabaseFixture>
+    [Collection("IntegrationDB")]
+    public class KotRepoTest
     {
         private readonly DatabaseFixture _fixture;
         private string _connectionString;

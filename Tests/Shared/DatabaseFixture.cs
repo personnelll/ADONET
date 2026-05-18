@@ -38,5 +38,12 @@ namespace Shared
                 _container = null!;
             }
         }
+
     }
+
+        [CollectionDefinition("IntegrationDB", DisableParallelization = true)]
+        public class IntegrationCollection : ICollectionFixture<DatabaseFixture>
+        {
+            // No code here - just links the fixture to the collection name
+        }
 }

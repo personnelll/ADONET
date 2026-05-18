@@ -6,7 +6,8 @@ using Testcontainers.MsSql;
 
 namespace Tests.RepositoriesTests
 {
-    public class StudentRepoTets : IClassFixture<DatabaseFixture>
+    [Collection("IntegrationDB")]
+    public class StudentRepoTets
     {
         private readonly DatabaseFixture _fixture;
         private string _connectionString;
