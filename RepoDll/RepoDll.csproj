@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="repositories\SQL\Etudiant_FindByLastNameDapper.sql" />
+    <EmbeddedResource Include="repositories\SQL\Kots_delete.sql" />
     <EmbeddedResource Include="repositories\SQL\Kots_SelectAll.sql" />
     <EmbeddedResource Include="repositories\SQL\Etudiant_SelectAllDapper.sql" />
     <EmbeddedResource Include="repositories\SQL\Etudiant_add.sql" />

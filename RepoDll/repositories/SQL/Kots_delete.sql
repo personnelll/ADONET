@@ -1,0 +1,1 @@
+﻿delete from dbo.KOT where KOT_id = @Id

@@ -63,17 +63,15 @@ namespace Repositories
 
         public void Delete(int id)
         {
-            string sql = GetFileFromAssemblyAsync("Kot_delete.sql");
+            string sql = GetFileFromAssemblyAsync("Kots_delete.sql");
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            Dictionary<string, object> dbArgs = new Dictionary<string, object>();
+            dbArgs.Add("@Id", id);
+
+            using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@Id", id);
-                    int rowsAffected = command.ExecuteNonQuery();
-                    _logger.LogInformation("{RowsAffected} row(s) deleted.", rowsAffected);
-                }
+                int rowsAffected = connection.Execute(sql, dbArgs);
+                _logger.LogInformation("{RowsAffected} row(s) deleted.", rowsAffected);
             }
         }
 

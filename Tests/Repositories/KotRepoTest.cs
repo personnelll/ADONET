@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging.Abstractions;
+﻿using DTO;
+using Microsoft.Extensions.Logging.Abstractions;
 using Repositories;
 using Shared;
 namespace Tests.RepositoriesTests
@@ -33,6 +34,25 @@ namespace Tests.RepositoriesTests
             Assert.NotNull(kots);
             Assert.NotEmpty(kots);
             Assert.Equal(2, kots.Count);            
+        }
+
+        [Fact]
+        public async Task DeleteTest()
+        {
+            await _dbSetup.InitKotsDataAsync();
+            // instantiate repo with NullLogger and injected connection string
+            var logger = NullLogger<Repositories.KotRepo>.Instance;
+            var repo = new Repositories.KotRepo(logger, _connectionString);
+
+            // act
+            repo.Delete(1);
+            // assert
+
+            List<KotStudentDTO> kots = repo.GetAll();
+
+            var kot = kots.FirstOrDefault(x => x.KOT_id == 1);
+
+            Assert.Null(kot);
         }
     }
 }

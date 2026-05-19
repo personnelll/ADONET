@@ -16,7 +16,8 @@ namespace Profiles
             CreateMap<KotStudentDTO, Kots>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.KOT_id))
                 .ForMember(d => d.nom, opt => opt.MapFrom(s => s.KOT_name))
-                .ForMember(d => d.Resident, opt => opt.MapFrom(s => s));
+                .ForMember(d => d.Resident, opt => opt.MapFrom(s => s))
+                .ForMember(d => d.Resident, opt => opt.MapFrom(s => string.IsNullOrWhiteSpace(s.ETU_MATRICULE) ? null : s));
         }
     }
 }

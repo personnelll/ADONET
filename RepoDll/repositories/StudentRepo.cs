@@ -70,7 +70,16 @@ namespace Repositories
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            string sql = GetFileFromAssemblyAsync("Etudiant_delete.sql");
+
+            Dictionary<string, object> dbArgs = new Dictionary<string, object>();
+            dbArgs.Add("@Id", id);
+
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                int rowsAffected = connection.Execute(sql, dbArgs);
+                _logger.LogInformation("{RowsAffected} row(s) deleted.", rowsAffected);
+            }
         }
 
         public void Update(Students student)
